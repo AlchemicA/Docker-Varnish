@@ -1,0 +1,14 @@
+#!/bin/ash
+
+[ "$DEBUG" = "true" ] && set -x
+
+if [[ -z "${VARNISH_TEMPLATE}" ]]; then
+	cp /etc/varnish/${VARNISH_TEMPLATE}.vcl /etc/varnish/default.vcl
+fi
+
+VCL_FILE="/etc/varnish/default.vcl"
+
+[ ! -z "${VARNISH_HOST}" ] && sed -i "s/!VARNISH_HOST!/${VARNISH_HOST}/" $VCL_FILE
+[ ! -z "${VARNISH_PORT}" ] && sed -i "s/!VARNISH_PORT!/${VARNISH_PORT}/" $VCL_FILE
+
+exec "$@"
