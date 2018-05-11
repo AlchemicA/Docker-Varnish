@@ -29,6 +29,11 @@ RUN set -ex \
 		&& ./configure \
 		&& make install \
 		&& rm -rf /tmp/libvmod-geoip \
+	) \
+	&& ( \
+		cd /usr/share/GeoIP/ \
+		wget -O GeoIP.dat.gz http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz \
+		gunzip GeoIP.dat.gz \
 	)
 
 ADD etc/*.vcl /etc/varnish/
